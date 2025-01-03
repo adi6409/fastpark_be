@@ -42,7 +42,7 @@ async function getAppStateFromAPI(carId) {
                 console.log('finished')
                 updateDirection('finished');
                 updateDistance("");
-                
+                return "finished"
             }
             console.log('App State:', appState);
         })
@@ -83,7 +83,7 @@ async function startGuidedParking() {
 async function loopAPIRequests(carId) {
     while (true) {
         console.log("Fetching App State for carId:", carId);
-        await getAppStateFromAPI(carId); // Use the passed carId
+        if (await getAppStateFromAPI(carId) == 'finished') break; // Use the passed carId
         await new Promise(resolve => setTimeout(resolve, 1000)); // Add a 1-second delay
     }
 }
