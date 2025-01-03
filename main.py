@@ -52,6 +52,8 @@ def get_car_info(carId: Union[str, None] = None):
         result = get_state(carId, car_positions)
         return jsonable_encoder(result, custom_encoder=custom_jsonable_encoder)
     except Exception as e:
+        print(e)
+        
         raise HTTPException(status_code=500, detail=str(e))
 
 
