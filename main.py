@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dummy_jsons import CARS_LIST, DUMMY_JSON
 from inference import get_state
 import mimetypes
+import os
 
 
 app = FastAPI()
@@ -30,6 +31,8 @@ def get_cars():
     return CARS_LIST
 
 
+
+# The following endpoint MUST also be able to serve subdirectories, like assets/icons/arrow.png
 @app.get("/assets/{filename}")
 def get_file(filename):
     return FileResponse("assets/" + filename)
@@ -38,6 +41,9 @@ def get_file(filename):
 # Serve .html, .css, .js files from the 'public' directory
 @app.get("/{filename}")
 def get_file(filename):
+    if not os.path.exists("public/" + filename):
+        print(f"File not found: {filename}")
+        return "File not found.", 404
     return FileResponse("public/" + filename)
 
 @app.get("/")

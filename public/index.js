@@ -1,7 +1,7 @@
 let currentCarIndex = 0;
 let cars;
 
-const directions = { "forward": "src/assets/arrow-forward.png", "left": "src/assets/arrow-left.png", "right": "src/assets/arrow-right.png" }
+const directions = { "forward": "assets/arrow-forward.png", "left": "assets/arrow-left.png", "right": "assets/arrow-right.png" }
 
 const apiUrlgetcars = 'http://172.30.167.169:8000/api/getCars';
 const apiUrlappstate = 'http://172.30.167.169:8000/api/appState';
