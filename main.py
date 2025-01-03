@@ -46,17 +46,25 @@ cam_disp = None
 frame_processing_thread = threading.Thread(target=process_stream, args=(car_positions,), daemon=True)
 frame_processing_thread.start()
 
+
+custom_encoder = {
+    np.integer: int,
+    np.floating: float,
+    np.ndarray: lambda obj: obj.tolist(),
+}
+
+
 @app.get("/api/appState")
 def get_car_info(carId: Union[str, None] = None):
     try:
         result = get_state(carId, car_positions)
-        return jsonable_encoder(result, custom_encoder=custom_jsonable_encoder)
+        # Use the corrected `custom_encoder`
+        return jsonable_encoder(result, custom_encoder=custom_encoder)
     except Exception as e:
         print(e)
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
-
 
 @app.get("/api/getCars")
 def get_cars():
