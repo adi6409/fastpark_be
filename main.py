@@ -53,7 +53,8 @@ def get_car_info(carId: Union[str, None] = None):
         return jsonable_encoder(result, custom_encoder=custom_jsonable_encoder)
     except Exception as e:
         print(e)
-        
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 
