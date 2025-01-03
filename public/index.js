@@ -42,6 +42,7 @@ function getAppStateFromAPI(carId) {
                 console.log('finished')
                 updateDirection('finished');
                 updateDistance("");
+                
             }
             console.log('App State:', appState);
         })
@@ -77,6 +78,7 @@ function startGuidedParking() {
     getAppStateFromAPI(carId)
     document.getElementById('loaderContainer').style = "display: none;";
     document.getElementById('carGuideContent').style = "display: flex;";
+    loopAPIRequests();
 }
 
 async function loopAPIRequests() {
