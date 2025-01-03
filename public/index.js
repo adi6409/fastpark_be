@@ -1,7 +1,7 @@
 let currentCarIndex = 0;
 let cars;
 
-const directions = { "forward": "assets/arrow-forward.png", "left": "assets/arrow-left.png", "right": "assets/arrow-right.png" , "finished": "assets/finished-parking.jp"}
+const directions = { "forward": "assets/arrow-forward.png", "left": "assets/arrow-left.png", "right": "assets/arrow-right.png" , "finihsed": "assets/finished-verafication.png"}
 
 const apiUrlgetcars = '/api/getCars';
 const apiUrlappstate = '/api/appState';
@@ -87,6 +87,7 @@ async function loopAPIRequests(carId) {
         await new Promise(resolve => setTimeout(resolve, 1000)); // Add a 1-second delay
     }
 }
+
 
 function updateDistance(distance) {
     console.log(distance)
