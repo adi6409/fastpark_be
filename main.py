@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 import requests
 from fastapi.middleware.cors import CORSMiddleware
-from dummy_jsons import CARS_LIST, DUMMY_JSON
+from dummy_jsons import CARS_LIST
 from inference import get_state, process_stream
 import mimetypes
 import os

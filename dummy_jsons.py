@@ -17,15 +17,15 @@ with open('dummy_json.json', 'r') as file:
 
 CARS_LIST = [
     {
-        "carId": "blue",
+        "carId": "hw_blue",
         "imageUrl": "https://fastpark.astroianu.dev/assets/blue.png"
     },
     {
-        "carId": "green",
+        "carId": "rc_green",
         "imageUrl": "https://fastpark.astroianu.dev/assets/green.png"
     },
     {
-        "carId": "lamborghini",
+        "carId": "rc_blue",
         "imageUrl": "https://fastpark.astroianu.dev/assets/lamborghini.png"
     },
     {
