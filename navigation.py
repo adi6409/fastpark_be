@@ -42,10 +42,15 @@ def update_closest_empty_ps(middle_pixel_car, carId):
 
 def get_middle_of_bbox(ls):
     if not isinstance(ls, (list, tuple)) or len(ls) != 4:
-        raise ValueError("Input must be a list or tuple with exactly 4 numeric values.")
+        raise ValueError(f"Input must be a list or tuple with exactly 4 numeric values, but got: {ls}")
     
-    # Extract bounding box coordinates
-    x1, y1, x2, y2 = ls
+    # Validate each element
+    try:
+        x1, y1, x2, y2 = [float(coord) for coord in ls]
+    except ValueError as e:
+        raise ValueError(f"Invalid value in input coordinates: {ls}. Details: {e}")
+    
+    # Calculate middle of the bounding box
     middle_x = (x1 + x2) / 2
     middle_y = (y1 + y2) / 2
     return middle_x, middle_y
