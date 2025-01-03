@@ -41,11 +41,17 @@ def update_closest_empty_ps(middle_pixel_car, carId):
     return get_middle_of_bbox(parking_slots[min_count]["pos"])
 
 def get_middle_of_bbox(ls):
-    print(ls)
-    ls_x = ls[0][0] + ls[1][0] / 2
-    ls_y = ls[0][1] + ls[2][1] / 2
-    middle_of_bbox = (ls_x, ls_y)
+    if not isinstance(ls, (list, tuple)) or len(ls) != 4:
+        raise ValueError("Input must be a list or tuple with exactly 4 numeric values.")
+    
+    # Extract bounding box coordinates
+    x1, y1, x2, y2 = ls
+    # Calculate middle of the bounding box
+    middle_x = (x1 + x2) / 2
+    middle_y = (y1 + y2) / 2
+    middle_of_bbox = (middle_x, middle_y)
     return middle_of_bbox
+
 
 
 def find_min_distance_ps(middle_pixel_car, parking_slots):
