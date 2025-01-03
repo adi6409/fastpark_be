@@ -81,7 +81,7 @@ function startGuidedParking() {
     loopAPIRequests();
 }
 
-async function loopAPIRequests() {
+function loopAPIRequests() {
     while (true) {
         getAppStateFromAPI(carId);
     }
