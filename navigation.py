@@ -87,6 +87,6 @@ def create_dictionary(x, y):
         "distance": abs(x)
     }
     if y < 20:
-        return d2
+        return [d2]
     else:
-        return d1, d2
+        return [d1, d2]
