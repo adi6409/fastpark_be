@@ -86,6 +86,6 @@ def create_dictionary(x, y, slotId):
     if y > 70:
         directions.append({"direction": "forward", "distance": abs(y), "slotId": slotId})
     if x != 0:
-        direction = "right" if x > 0 else "left"
+        direction = "right" if x < 0 else "left"
         directions.append({"direction": direction, "distance": abs(x), "slotId": slotId})
     return directions
