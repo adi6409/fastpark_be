@@ -3,12 +3,11 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 import requests
 from fastapi.middleware.cors import CORSMiddleware
-import logging
 from dummy_jsons import CARS_LIST, DUMMY_JSON
 from inference import get_state
+import mimetypes
 
 
-logging.basicConfig(filename="app.log", filemode='a')
 app = FastAPI()
 
 
@@ -34,3 +33,13 @@ def get_cars():
 @app.get("/assets/{filename}")
 def get_file(filename):
     return FileResponse("assets/" + filename)
+
+
+# Serve .html, .css, .js files from the 'public' directory
+@app.get("/{filename}")
+def get_file(filename):
+    return FileResponse("public/" + filename)
+
+@app.get("/")
+def get_index():
+    return FileResponse("public/index.html")

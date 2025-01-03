@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastPark</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #e6aede, #dfdfdd, #fefbe0, #fff9c4, #ffeb3b, #ffeb3b);
+            overflow: hidden;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ffeb3b;
+            padding: 5%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .menu-icon {
+            font-size: 4vh;
+            cursor: pointer;
+            color: #ffffff;
+        }
+        
+        .title {
+            font-size: 300%;
+            font-weight: bold;
+            color: #000;
+        }
+        
+        .profile-icon {
+            width: 4vh;
+            height: 4vh;
+            border-radius: 50%;
+            background: #d3d3d3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .main-content {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 60px);
+            text-align: center;
+        }
+        
+        .car-guide-content {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 60px);
+            text-align: center;
+        }
+        
+        .directions-box {
+            position: relative;
+            width: 80%;
+            height: auto;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 10%;
+        }
+        
+        .direction-image {
+            width: 100%;
+            height: auto;
+        }
+        
+        .car-slider {
+            position: relative;
+            width: 80%;
+            height: auto;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 10%;
+        }
+        
+        .car-image {
+            width: 100%;
+            height: auto;
+        }
+        
+        .nav-arrows {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+        }
+        
+        .arrow {
+            cursor: pointer;
+            width: 10%;
+            height: 12%;
+            padding-bottom: 25%;
+        }
+        
+        .arrow-images {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .enter-button {
+            align-items: center;
+            background-color: #0A66C2;
+            border: 0;
+            border-radius: 100px;
+            box-sizing: border-box;
+            color: #ffffff;
+            cursor: pointer;
+            display: inline-flex;
+            font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+            font-size: 140%;
+            font-weight: 600;
+            justify-content: center;
+            line-height: 20px;
+            width: 70%;
+            height: 5%;
+            overflow: hidden;
+            padding: 0px;
+            padding-left: 20px;
+            padding-right: 20px;
+            text-align: center;
+            touch-action: manipulation;
+            transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+            user-select: none;
+            -webkit-user-select: none;
+            vertical-align: middle;
+        }
+        
+        .enter-button:hover,
+        .enter-button:focus {
+            background-color: #16437E;
+            color: #ffffff;
+        }
+        
+        .enter-button:active {
+            background: #09223b;
+            color: rgb(255, 255, 255, .7);
+        }
+        
+        .enter-button:disabled {
+            cursor: not-allowed;
+            background: rgba(0, 0, 0, .08);
+            color: rgba(0, 0, 0, .3);
+        }
+        
+        .car-id h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            width: 160px;
+            text-align: center;
+            margin: auto;
+            white-space: nowrap;
+            padding-bottom: 13px;
+        }
+        
+        .car-id h1:before {
+            background-color: #c50000;
+            content: '';
+            display: block;
+            height: 3px;
+            width: 75px;
+            margin-bottom: 5px;
+        }
+        
+        .car-id h1:after {
+            background-color: #c50000;
+            content: '';
+            display: block;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            height: 3px;
+            width: 75px;
+            margin-bottom: 0.25em;
+        }
+        /* Center the loader */
+        
+        .loader-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        /* Loader animation */
+        
+        .loader {
+            width: 100px;
+            /* Increase the width */
+            height: 100px;
+            /* Increase the height */
+            border: 12px solid #fff;
+            /* Adjust the border thickness */
+            border-top: 12px solid #ffeb3b;
+            /* Adjust border for spinning effect */
+            border-radius: 50%;
+            animation: spin 1s linear infinite, pulse 1.5s ease-in-out infinite;
+        }
+        /* Spin animation */
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        /* Pulse animation */
+        
+        @keyframes pulse {
+            0%,
+            100% {
+                box-shadow: 0 0 10px #ffeb3b, 0 0 30px #ffeb3b;
+            }
+            50% {
+                box-shadow: 0 0 20px #fff, 0 0 40px #fff;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="menu-icon">&#9776;</div>
+        <div class="title"><span style="color: #ffffff;">Fast</span><span style="color: #1565c0;">Park</span></div>
+        <div class="profile-icon">👤</div>
+    </div>
+
+    <div class="main-content" id="mainContent" style="display: flex;">
+        <div class="car-id">
+            <h1 id="carId">CarId</h1>
+        </div>
+        <div class="nav-arrows">
+            <div class="arrow" onclick="changeCar('prev')">
+                <img class="arrow-images" src="src/icons/Layer_16-2.png" />
+            </div>
+            <div class="car-slider" id="carSlider"><img class="car-image" id="carImage" src="" /></div>
+            <div class="arrow" onclick="changeCar('next')">
+                <img class="arrow-images" src="src/icons/Layer_16-1.png" />
+            </div>
+        </div>
+        <button class="enter-button" onclick="enterParkingLot()">Enter Parkinglot</button>
+    </div>
+
+    <div class="loader-container" id="loaderContainer" style="display: none;">
+        <div class="loader"></div>
+    </div>
+
+    <div class="car-guide-content" id="carGuideContent" style="display: none;">
+        <div class="distance-name">
+            <h1 id="directionNameId">someshit</h1>
+        </div>
+        <div class="directions-box"><img id="directionId" class="direction-image" src="src/assets/arrow-forward.png" /></div>
+        <div class="distance-box">
+            <h1 id="distanceId">CarId</h1>
+        </div>
+    </div>
+
+    <script src="src/index.js"></script>
+</body>
+
+</html>
