@@ -85,6 +85,7 @@ async function loopAPIRequests(carId) {
     while (!isFinished) {
         console.log("Fetching App State for carId:", carId);
         const appState = await getAppStateFromAPI(carId);
+        console.log(appState)
         if (appState && appState.state === "finished") {
             isFinished = true;
             console.log("Finished parking!");
