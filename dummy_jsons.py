@@ -1,11 +1,18 @@
-DUMMY_JSON = {
-    "state": "directions",
-    "data": {
-            "direction": "forward",
-            "distanceToNext": 200,
-            "distanceToEnd": 500
-        }
-    }
+import json
+
+# DUMMY_JSON = {
+#     "state": "directions",
+#     "data": {
+#             "direction": "forward",
+#             "distanceToNext": 200,
+#             "distanceToEnd": 500
+#         }
+#     }
+
+# Read DUMMY_JSON from dummy_json.json
+with open('dummy_json.json', 'r') as file:
+    DUMMY_JSON = json.load(file)
+    
 
 
 CARS_LIST = [

@@ -1,0 +1,8 @@
+{
+    "state": "directions",
+    "data": {
+        "direction": "forward",
+        "distanceToNext": 200,
+        "distanceToEnd": 500
+    }
+}
