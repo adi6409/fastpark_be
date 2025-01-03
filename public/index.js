@@ -1,7 +1,7 @@
 let currentCarIndex = 0;
 let cars;
 
-const directions = { "forward": "assets/arrow-forward.png", "left": "assets/arrow-left.png", "right": "assets/arrow-right.png" , "finished": "assets/finished-parking.png"}
+const directions = { "forward": "assets/arrow-forward.png", "left": "assets/arrow-left.png", "right": "assets/arrow-right.png" , "finished": "assets/finished-parking.jpg"}
 
 const apiUrlgetcars = '/api/getCars';
 const apiUrlappstate = '/api/appState';
