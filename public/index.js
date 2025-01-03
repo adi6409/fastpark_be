@@ -36,11 +36,12 @@ async function getAppStateFromAPI(carId) {
         .then(appState => {
             if (appState['state'] == 'directions') {
                 updateDirection(appState['data']['direction'])
-                updateDistance(appState['data']['distanceToNext'])
+                updateDistance(`${appState['data']['distanceToNext']} (${appState['data']['slotId']})`);
             }
             else if(appState['state'] == 'finished'){
                 console.log('finished')
                 updateDirection('finished');
+                console.log(`Slot ${appState['data']['slotId']} is on your ${appState['data']['direction']}`);
                 updateDistance(`Slot ${appState['data']['slotId']} is on your ${appState['data']['direction']}`);
                 return 'finished';
             }
