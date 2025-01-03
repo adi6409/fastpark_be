@@ -72,6 +72,9 @@ def get_distance_from_car_to_parking(car, parking):
 
 
 def get_distance(car, parking_slot):
+    # Correct subtraction for a top-left origin system
+    print(f"Car: {car}, Parking Slot: {parking_slot}")
+
     x = parking_slot[0] - car[0]
     y = parking_slot[1] - car[1]
     return x, y
