@@ -56,7 +56,7 @@ def get_middle_of_bbox(ls):
 
 def find_min_distance_ps(middle_pixel_car, parking_slots):
     flag = True
-    min_distance
+    min_distance = 0
     count = 0
     min_count
     for parking_slot in parking_slots:
