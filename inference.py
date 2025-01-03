@@ -170,6 +170,7 @@ def get_state(carId, car_positions):
     # get_navigation needs `car` to be a list of tuples, each being x, y coordinates
     car = [(car[0], car[1]), (car[2], car[1]), (car[2], car[3]), (car[0], car[3])]
     directions = get_navigation(car, carId)
+    print(directions)
     if len(directions) == 1:
         return {"state": "finished"}
     else:
