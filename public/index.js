@@ -26,29 +26,28 @@ function getCarListFromAPI() {
 }
 
 async function getAppStateFromAPI(carId) {
-    return fetch(apiUrlappstate + `?carId=${carId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(appState => {
-            if (appState['state'] === 'directions') {
-                updateDirection(appState['data']['direction']);
-                updateDistance(appState['data']['distanceToNext']);
-            } else if (appState['state'] === 'finished') {
-                console.log('Finished');
-                updateDirection('finished');
-                updateDistance("");
-            }
-            console.log('App State:', appState);
-            return appState; // Return the appState
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            return null; // Handle errors gracefully
-        });
+    try {
+        const response = await fetch(`${apiUrlappstate}?carId=${carId}`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch appState: ${response.statusText}`);
+        }
+
+        const appState = await response.json();
+
+        if (appState.state === "directions") {
+            updateDirection(appState.data.direction);
+            updateDistance(appState.data.distanceToNext);
+        } else if (appState.state === "finished") {
+            console.log("App State: finished");
+            updateDirection("finished");
+            updateDistance("");
+        }
+
+        return appState; // Ensure appState is returned
+    } catch (error) {
+        console.error("Error in getAppStateFromAPI:", error);
+        return null; // Return null on failure to prevent crashes
+    }
 }
 
 
@@ -81,24 +80,31 @@ async function startGuidedParking() {
     await loopAPIRequests(carId); // Pass the carId to the function
 }
 
-async function loopAPIRequests(carId) {
-    let isFinished = false; // Flag to track the 'finished' state
+async function loopAPIRequests() {
+    const carId = cars[currentCarIndex].carId; // Use the current car ID
+    let isFinished = false; // Flag to stop the loop
+
     while (!isFinished) {
-        console.log("Fetching App State for carId:", carId);
-        const appState = await getAppStateFromAPI(carId);
+        try {
+            console.log(`Fetching appState for carId: ${carId}`);
+            const appState = await getAppStateFromAPI(carId);
 
-        // Check if the state is 'finished'
-        if (appState && appState.state === "finished") {
-            isFinished = true; // Exit the loop
-            console.log("Finished parking! Stopping requests.");
-        }
+            // If appState is finished, stop the loop
+            if (appState && appState.state === "finished") {
+                isFinished = true;
+                console.log("Parking process finished. Stopping requests.");
+                break; // Exit the loop immediately
+            }
 
-        // Add a delay before the next request
-        if (!isFinished) {
+            // Optional: Delay to avoid spamming the server
             await new Promise(resolve => setTimeout(resolve, 1000));
+        } catch (error) {
+            console.error("Error in loopAPIRequests:", error);
         }
     }
+    console.log("Exiting loopAPIRequests.");
 }
+
 
 
 function updateDistance(distance) {
