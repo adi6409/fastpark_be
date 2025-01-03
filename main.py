@@ -4,9 +4,10 @@ from fastapi.responses import FileResponse
 import requests
 from fastapi.middleware.cors import CORSMiddleware
 from dummy_jsons import CARS_LIST, DUMMY_JSON
-from inference import get_state
+from inference import get_state, process_stream
 import mimetypes
 import os
+import threading
 
 
 app = FastAPI()
@@ -21,9 +22,17 @@ app.add_middleware(
 )
 
 
+# Create a thread that will run the constant frame processing and will update a dictionary with the carId as key and the position as value.
+car_positions = {}
+# frame_processing_thread = threading.Thread(target=process_stream, args=(car_positions,), daemon=True)
+# In the frame processing we want to use cv2.imshow, which doesn't work in a thread. So we are gonna pass cam_disp as an argument and update it in the function.
+cam_disp = None
+frame_processing_thread = threading.Thread(target=process_stream, args=(car_positions, cam_disp), daemon=True)
+frame_processing_thread.start()
+
 @app.get("/api/appState")
 def get_car_info(carId: Union[str, None] = None):
-    return DUMMY_JSON
+    return get_state(carId, car_positions)
 
 
 @app.get("/api/getCars")

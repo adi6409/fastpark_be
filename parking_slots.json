@@ -1,0 +1,74 @@
+[
+    {
+        "slotId": "A1",
+        "isTaken": false,
+        "assignedTo": null,
+        "isNavigatedTo": false,
+        "pos": [
+            [21, 1866],
+            [306, 1866],
+            [306, 1974],
+            [21, 1974]
+        ]
+    },
+    {
+        "slotId": "A3",
+        "isTaken": false,
+        "assignedTo": null,
+        "isNavigatedTo": false,
+        "pos": [
+            [24, 1722],
+            [318, 1722],
+            [318, 1830],
+            [24, 1830]
+        ]
+    },
+    {
+        "slotId": "A5",
+        "isTaken": false,
+        "assignedTo": null,
+        "isNavigatedTo": false,
+        "pos": [
+            [27, 1572],
+            [303, 1572],
+            [303, 1683],
+            [27, 1683]
+        ]        
+    },
+    {
+        "slotId": "A7",
+        "isTaken": false,
+        "assignedTo": null,
+        "isNavigatedTo": false,
+        "pos": [
+            [27, 1419],
+            [297, 1419],
+            [297, 1536],
+            [27, 1536]
+        ]        
+    },
+    {
+        "slotId": "A9",
+        "isTaken": false,
+        "assignedTo": null,
+        "isNavigatedTo": false,
+        "pos": [
+            [27, 1269],
+            [300, 1269],
+            [300, 1374],
+            [27, 1374]
+        ]  
+    },
+    {
+        "slotId": "A11",
+        "isTaken": false,
+        "assignedTo": null,
+        "isNavigatedTo": false,
+        "pos": [
+            [24, 1116],
+            [306, 1116],
+            [306, 1236],
+            [24, 1236]
+        ]
+    }
+]
