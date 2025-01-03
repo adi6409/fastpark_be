@@ -1,7 +1,7 @@
 let currentCarIndex = 0;
 let cars;
 
-const directions = { "forward": "assets/arrow-forward.png", "left": "assets/arrow-left.png", "right": "assets/arrow-right.png" }
+const directions = { "forward": "assets/arrow-forward.png", "left": "assets/arrow-left.png", "right": "assets/arrow-right.png" , "finihsed": "assets/finished-verafication.png"}
 
 const apiUrlgetcars = '/api/getCars';
 const apiUrlappstate = '/api/appState';
@@ -37,6 +37,10 @@ function getAppStateFromAPI(carId) {
             if (appState['state'] == 'directions') {
                 updateDirection(appState['data']['direction'])
                 updateDistance(appState['data']['distanceToNext'])
+            }
+            else if(appState['state'] == 'finished'){
+                updateDirection('finished');
+                updateDistance("");
             }
             console.log('App State:', appState);
         })
