@@ -27,7 +27,7 @@ car_positions = {}
 # frame_processing_thread = threading.Thread(target=process_stream, args=(car_positions,), daemon=True)
 # In the frame processing we want to use cv2.imshow, which doesn't work in a thread. So we are gonna pass cam_disp as an argument and update it in the function.
 cam_disp = None
-frame_processing_thread = threading.Thread(target=process_stream, args=(car_positions), daemon=True)
+frame_processing_thread = threading.Thread(target=process_stream, args=(car_positions,), daemon=True)
 frame_processing_thread.start()
 
 @app.get("/api/appState")
