@@ -42,7 +42,7 @@ async function getAppStateFromAPI(carId) {
                 console.log('finished')
                 updateDirection('finished');
                 updateDistance("");
-                
+                return 'finished';
             }
             console.log('App State:', appState);
         })
