@@ -26,30 +26,30 @@ function getCarListFromAPI() {
 }
 
 async function getAppStateFromAPI(carId) {
-    try {
-        const response = await fetch(apiUrlappstate + `?carId=${carId}`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const appState = await response.json();
-        
-        if (appState['state'] === 'directions') {
-            updateDirection(appState['data']['direction']);
-            updateDistance(appState['data']['distanceToNext']);
-        } else if (appState['state'] === 'finished') {
-            console.log('Finished parking!');
-            updateDirection('finished');
-            updateDistance("");
-        }
-        
-        console.log('App State:', appState);
-        return appState; // Return the fetched app state
-    } catch (error) {
-        console.error('Error:', error);
-        return null;
-    }
+    fetch(apiUrlappstate + `?carId=${carId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(appState => {
+            if (appState['state'] == 'directions') {
+                updateDirection(appState['data']['direction'])
+                updateDistance(appState['data']['distanceToNext'])
+            }
+            else if(appState['state'] == 'finished'){
+                console.log('finished')
+                updateDirection('finished');
+                updateDistance("");
+                return 'finished';
+            }
+            console.log('App State:', appState);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
-
 
 getCarListFromAPI();
 
@@ -85,12 +85,11 @@ async function loopAPIRequests(carId) {
     while (!isFinished) {
         console.log("Fetching App State for carId:", carId);
         const appState = await getAppStateFromAPI(carId);
-        console.log(appState)
         if (appState && appState.state === "finished") {
             isFinished = true;
             console.log("Finished parking!");
         }
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Add delay to avoid spamming
+        await new Promise(resolve => setTimeout(resolve, 1000));
     }
 }
 
