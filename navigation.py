@@ -41,6 +41,7 @@ def update_closest_empty_ps(middle_pixel_car, carId):
     return get_middle_of_bbox(parking_slots[min_count]["pos"])
 
 def get_middle_of_bbox(ls):
+    print(ls)
     ls_x = ls[0][0] + ls[1][0] / 2
     ls_y = ls[0][1] + ls[2][1] / 2
     middle_of_bbox = (ls_x, ls_y)
