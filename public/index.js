@@ -39,6 +39,7 @@ function getAppStateFromAPI(carId) {
                 updateDistance(appState['data']['distanceToNext'])
             }
             else if(appState['state'] == 'finished'){
+                console.log('finished')
                 updateDirection('finished');
                 updateDistance("");
             }
@@ -78,7 +79,7 @@ function startGuidedParking() {
     document.getElementById('carGuideContent').style = "display: flex;";
 }
 
-function loopAPIRequests() {
+async function loopAPIRequests() {
     while (true) {
         getAppStateFromAPI(carId);
     }
