@@ -157,9 +157,9 @@ def process_stream(car_positions):
 
         # Color the frame from gray
 
-        # if count < 10:
-        #     cv2.imwrite(f"frames/output_frame_{count}.png", output_frame)
-        #     count += 1
+        if count < 10:
+            cv2.imwrite(f"frames/output_frame_{count}.png", output_frame)
+            count += 1
         
 
 
