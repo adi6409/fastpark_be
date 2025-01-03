@@ -81,10 +81,15 @@ async function startGuidedParking() {
 }
 
 async function loopAPIRequests(carId) {
-    while (true) {
+    let isFinished = false;
+    while (!isFinished) {
         console.log("Fetching App State for carId:", carId);
-        await getAppStateFromAPI(carId); // Use the passed carId
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Add a 1-second delay
+        const appState = await getAppStateFromAPI(carId);
+        if (appState && appState.state === "finished") {
+            isFinished = true;
+            console.log("Finished parking!");
+        }
+        await new Promise(resolve => setTimeout(resolve, 1000));
     }
 }
 
