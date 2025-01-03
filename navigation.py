@@ -41,19 +41,27 @@ def update_closest_empty_ps(middle_pixel_car, carId):
 
 
 def get_middle_of_bbox(ls):
-    if not isinstance(ls, (list, tuple)) or len(ls) != 4:
-        raise ValueError(f"Input must be a list or tuple with exactly 4 numeric values, but got: {ls}")
+    print(f"Debug: Received input for bbox: {ls}")
     
-    # Validate each element
+    if not isinstance(ls, (list, tuple)) or len(ls) < 2:
+        raise ValueError(f"Input must be a list of at least two coordinate pairs, but got: {ls}")
+    
     try:
-        x1, y1, x2, y2 = [float(coord) for coord in ls]
-    except ValueError as e:
-        raise ValueError(f"Invalid value in input coordinates: {ls}. Details: {e}")
+        # Flatten the list of coordinates
+        x_coords = [coord[0] for coord in ls]
+        y_coords = [coord[1] for coord in ls]
+    except (IndexError, TypeError) as e:
+        raise ValueError(f"Invalid coordinate structure in input: {ls}. Details: {e}")
     
-    # Calculate middle of the bounding box
-    middle_x = (x1 + x2) / 2
-    middle_y = (y1 + y2) / 2
+    # Find the min and max for x and y
+    x_min, x_max = min(x_coords), max(x_coords)
+    y_min, y_max = min(y_coords), max(y_coords)
+    
+    # Calculate the middle point
+    middle_x = (x_min + x_max) / 2
+    middle_y = (y_min + y_max) / 2
     return middle_x, middle_y
+
 
 
 def find_min_distance_ps(middle_pixel_car, parking_slots):
