@@ -25,7 +25,7 @@ function getCarListFromAPI() {
         });
 }
 
-function getAppStateFromAPI(carId) {
+async function getAppStateFromAPI(carId) {
     fetch(apiUrlappstate + `?carId=${carId}`)
         .then(response => {
             if (!response.ok) {
@@ -72,18 +72,18 @@ function enterParkingLot() {
     startGuidedParking();
 }
 
-function startGuidedParking() {
+async function startGuidedParking() {
     let carId = cars[currentCarIndex].carId
     console.log(`carId: ${carId}`)
-    getAppStateFromAPI(carId)
     document.getElementById('loaderContainer').style = "display: none;";
     document.getElementById('carGuideContent').style = "display: flex;";
-    loopAPIRequests();
+    await loopAPIRequests();
 }
 
-function loopAPIRequests() {
+async function loopAPIRequests() {
     while (true) {
-        getAppStateFromAPI(carId);
+        console.log("loop number")
+        await getAppStateFromAPI(carId);
     }
 }
 
