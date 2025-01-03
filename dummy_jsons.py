@@ -11,26 +11,26 @@ DUMMY_JSON = {
 CARS_LIST = [
     {
         "carId": "blue",
-        "imageUrl": "http://172.30.167.169:8000/assets/blue.png"
+        "imageUrl": "https://fastpark.astroianu.dev/assets/blue.png"
     },
     {
         "carId": "green",
-        "imageUrl": "http://172.30.167.169:8000/assets/green.png"
+        "imageUrl": "https://fastpark.astroianu.dev/assets/green.png"
     },
     {
         "carId": "lamborghini",
-        "imageUrl": "http://172.30.167.169:8000/assets/lamborghini.png"
+        "imageUrl": "https://fastpark.astroianu.dev/assets/lamborghini.png"
     },
     {
         "carId": "taxi",
-        "imageUrl": "http://172.30.167.169:8000/assets/taxi.png"
+        "imageUrl": "https://fastpark.astroianu.dev/assets/taxi.png"
     },
     {
         "carId": "turquoise",
-        "imageUrl": "http://172.30.167.169:8000/assets/turquoise.png"
+        "imageUrl": "https://fastpark.astroianu.dev/assets/turquoise.png"
     },
     {
         "carId": "volvo",
-        "imageUrl": "http://172.30.167.169:8000/assets/volvo.png"
+        "imageUrl": "https://fastpark.astroianu.dev/assets/volvo.png"
     }
 ]
