@@ -3,8 +3,8 @@ let cars;
 
 const directions = { "forward": "assets/arrow-forward.png", "left": "assets/arrow-left.png", "right": "assets/arrow-right.png" }
 
-const apiUrlgetcars = 'http://172.30.167.169:8000/api/getCars';
-const apiUrlappstate = 'http://172.30.167.169:8000/api/appState';
+const apiUrlgetcars = '/api/getCars';
+const apiUrlappstate = '/api/appState';
 
 function getCarListFromAPI() {
     fetch(apiUrlgetcars)
