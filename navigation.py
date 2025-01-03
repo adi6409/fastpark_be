@@ -39,28 +39,31 @@ def update_closest_empty_ps(middle_pixel_car, carId):
     update_parking_slot(min_count, status)
     return get_middle_of_bbox(parking_slots[min_count]["pos"])
 
-
 def get_middle_of_bbox(ls):
     print(f"Debug: Received input for bbox: {ls}")
     
-    if not isinstance(ls, (list, tuple)) or len(ls) < 2:
-        raise ValueError(f"Input must be a list of at least two coordinate pairs, but got: {ls}")
+    # Case 1: Flat list [x1, y1, x2, y2]
+    if isinstance(ls, (list, tuple)) and len(ls) == 4 and all(isinstance(coord, (int, float)) for coord in ls):
+        x1, y1, x2, y2 = ls
+        middle_x = (x1 + x2) / 2
+        middle_y = (y1 + y2) / 2
+        return middle_x, middle_y
     
-    try:
-        # Flatten the list of coordinates
-        x_coords = [coord[0] for coord in ls]
-        y_coords = [coord[1] for coord in ls]
-    except (IndexError, TypeError) as e:
-        raise ValueError(f"Invalid coordinate structure in input: {ls}. Details: {e}")
+    # Case 2: List of lists [[x1, y1], [x2, y2], ...]
+    elif isinstance(ls, (list, tuple)) and all(isinstance(coord, (list, tuple)) and len(coord) == 2 for coord in ls):
+        try:
+            x_coords = [coord[0] for coord in ls]
+            y_coords = [coord[1] for coord in ls]
+            x_min, x_max = min(x_coords), max(x_coords)
+            y_min, y_max = min(y_coords), max(y_coords)
+            middle_x = (x_min + x_max) / 2
+            middle_y = (y_min + y_max) / 2
+            return middle_x, middle_y
+        except (IndexError, TypeError) as e:
+            raise ValueError(f"Invalid coordinate structure in input: {ls}. Details: {e}")
     
-    # Find the min and max for x and y
-    x_min, x_max = min(x_coords), max(x_coords)
-    y_min, y_max = min(y_coords), max(y_coords)
-    
-    # Calculate the middle point
-    middle_x = (x_min + x_max) / 2
-    middle_y = (y_min + y_max) / 2
-    return middle_x, middle_y
+    # Invalid input
+    raise ValueError(f"Input must be a flat list [x1, y1, x2, y2] or a list of coordinate pairs [[x1, y1], ...], but got: {ls}")
 
 
 
