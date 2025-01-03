@@ -40,31 +40,7 @@ def update_closest_empty_ps(middle_pixel_car, carId):
     return get_middle_of_bbox(parking_slots[min_count]["pos"])
 
 def get_middle_of_bbox(ls):
-    print(f"Debug: Received input for bbox: {ls}")
-    
-    # Case 1: Flat list [x1, y1, x2, y2]
-    if isinstance(ls, (list, tuple)) and len(ls) == 4 and all(isinstance(coord, (int, float)) for coord in ls):
-        x1, y1, x2, y2 = ls
-        middle_x = (x1 + x2) / 2
-        middle_y = (y1 + y2) / 2
-        return middle_x, middle_y
-    
-    # Case 2: List of lists [[x1, y1], [x2, y2], ...]
-    elif isinstance(ls, (list, tuple)) and all(isinstance(coord, (list, tuple)) and len(coord) == 2 for coord in ls):
-        try:
-            x_coords = [coord[0] for coord in ls]
-            y_coords = [coord[1] for coord in ls]
-            x_min, x_max = min(x_coords), max(x_coords)
-            y_min, y_max = min(y_coords), max(y_coords)
-            middle_x = (x_min + x_max) / 2
-            middle_y = (y_min + y_max) / 2
-            return middle_x, middle_y
-        except (IndexError, TypeError) as e:
-            raise ValueError(f"Invalid coordinate structure in input: {ls}. Details: {e}")
-    
-    # Invalid input
-    raise ValueError(f"Input must be a flat list [x1, y1, x2, y2] or a list of coordinate pairs [[x1, y1], ...], but got: {ls}")
-
+    return [(ls[0][0] + ls[1][0]) // 2, (ls[0][1] + ls[2][1]) // 2]
 
 
 def find_min_distance_ps(middle_pixel_car, parking_slots):
