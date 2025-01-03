@@ -1,6 +1,7 @@
 from typing import Union
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.exceptions import HTTPException
 import requests
 from fastapi.middleware.cors import CORSMiddleware
 from dummy_jsons import CARS_LIST, DUMMY_JSON
@@ -8,6 +9,21 @@ from inference import get_state, process_stream
 import mimetypes
 import os
 import threading
+
+
+from fastapi.encoders import jsonable_encoder
+import numpy as np
+
+# Convert numpy.int64 to int
+def custom_jsonable_encoder(obj):
+    if isinstance(obj, np.integer):
+        return int(obj)
+    if isinstance(obj, np.floating):
+        return float(obj)
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    return obj
+
 
 
 app = FastAPI()
@@ -32,7 +48,11 @@ frame_processing_thread.start()
 
 @app.get("/api/appState")
 def get_car_info(carId: Union[str, None] = None):
-    return get_state(carId, car_positions)
+    try:
+        result = get_state(carId, car_positions)
+        return jsonable_encoder(result, custom_encoder=custom_jsonable_encoder)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.get("/api/getCars")
