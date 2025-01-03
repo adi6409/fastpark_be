@@ -164,6 +164,24 @@ def process_stream(car_positions):
 
 
 
+def ensure_no_cars_in_parking_lot(slotId, car_positions):
+    # For each car in car_positions, check if it is in the parking slot by checking if the middle of the car is in the slot
+    # Find the slot with "slotId" equal to the slotId parameter
+    slot = None
+    for parking_slot in get_parking_slots():
+        if parking_slot["slotId"] == slotId:
+            slot = parking_slot
+            break
+    if slot is None:
+        return {"error": "Slot not found."}
+    slot_coordinates = slot["pos"]
+    for carId, car in car_positions.items():
+        middle_x = (car[0] + car[2]) // 2
+        middle_y = (car[1] + car[3]) // 2
+        if cv2.pointPolygonTest(np.array(slot_coordinates, np.int32), (middle_x, middle_y), False) >= 0:
+            return {"error": "Car in parking slot."}
+    return {"message": "No cars in parking slot."}
+
 
 def get_state(carId, car_positions):
     car = car_positions[carId]
@@ -179,6 +197,7 @@ def get_state(carId, car_positions):
             "state": "directions",
             "data": {
                 "direction": direction,
-                "distanceToNext": directions[0].get("distance")
+                "distanceToNext": directions[0].get("distance"),
+                "slotId": directions[-1].get("slotId")
             }
         }
