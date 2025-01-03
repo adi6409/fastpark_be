@@ -26,7 +26,7 @@ def is_not_assigned(carId):
 
 def get_directions(middle_pixel_car, parking_slots_pixel):
     x, y = get_distance(middle_pixel_car, parking_slots_pixel)
-    directions = [create_dictionary(x, y)]
+    directions = create_dictionary(x, y)
     return directions
 
 
