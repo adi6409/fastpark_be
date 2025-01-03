@@ -72,16 +72,15 @@ def get_distance_from_car_to_parking(car, parking):
 
 
 def get_distance(car, parking_slot):
-    # Correct subtraction to account for coordinate system
-    x = car[0] - parking_slot[0]
-    y = car[1] - parking_slot[1]
+    x = parking_slot[0] - car[0]
+    y = parking_slot[1] - car[1]
     return x, y
 
 
 
 def create_dictionary(x, y, slotId):
     directions = []
-    if y > 20:
+    if y != 0:
         directions.append({"direction": "forward", "distance": abs(y), "slotId": slotId})
     if x != 0:
         direction = "right" if x > 0 else "left"
