@@ -26,7 +26,7 @@ function getCarListFromAPI() {
 }
 
 async function getAppStateFromAPI(carId) {
-    fetch(apiUrlappstate + `?carId=${carId}`)
+    return fetch(apiUrlappstate + `?carId=${carId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -34,22 +34,23 @@ async function getAppStateFromAPI(carId) {
             return response.json();
         })
         .then(appState => {
-            if (appState['state'] == 'directions') {
-                updateDirection(appState['data']['direction'])
-                updateDistance(appState['data']['distanceToNext'])
-            }
-            else if(appState['state'] == 'finished'){
-                console.log('finished')
+            if (appState['state'] === 'directions') {
+                updateDirection(appState['data']['direction']);
+                updateDistance(appState['data']['distanceToNext']);
+            } else if (appState['state'] === 'finished') {
+                console.log('Finished');
                 updateDirection('finished');
                 updateDistance("");
-                return "finished"
             }
             console.log('App State:', appState);
+            return appState; // Return the appState
         })
         .catch(error => {
             console.error('Error:', error);
+            return null; // Handle errors gracefully
         });
 }
+
 
 getCarListFromAPI();
 
@@ -81,12 +82,24 @@ async function startGuidedParking() {
 }
 
 async function loopAPIRequests(carId) {
-    while (true) {
+    let isFinished = false; // Flag to track the 'finished' state
+    while (!isFinished) {
         console.log("Fetching App State for carId:", carId);
-        if (await getAppStateFromAPI(carId) == 'finished') break; // Use the passed carId
-        await new Promise(resolve => setTimeout(resolve, 1000)); // Add a 1-second delay
+        const appState = await getAppStateFromAPI(carId);
+
+        // Check if the state is 'finished'
+        if (appState && appState.state === "finished") {
+            isFinished = true; // Exit the loop
+            console.log("Finished parking! Stopping requests.");
+        }
+
+        // Add a delay before the next request
+        if (!isFinished) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
     }
 }
+
 
 function updateDistance(distance) {
     console.log(distance)
