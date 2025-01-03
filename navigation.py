@@ -58,7 +58,7 @@ def find_min_distance_ps(middle_pixel_car, parking_slots):
     flag = True
     min_distance = 0
     count = 0
-    min_count
+    min_count = 0
     for parking_slot in parking_slots:
         count += 1
         if is_empty(parking_slot):
