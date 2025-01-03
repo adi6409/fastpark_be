@@ -73,17 +73,18 @@ function enterParkingLot() {
 }
 
 async function startGuidedParking() {
-    let carId = cars[currentCarIndex].carId
-    console.log(`carId: ${carId}`)
+    const carId = cars[currentCarIndex].carId; // Define `carId` in this scope
+    console.log(`carId: ${carId}`);
     document.getElementById('loaderContainer').style = "display: none;";
     document.getElementById('carGuideContent').style = "display: flex;";
-    await loopAPIRequests();
+    await loopAPIRequests(carId); // Pass the carId to the function
 }
 
-async function loopAPIRequests() {
+async function loopAPIRequests(carId) {
     while (true) {
-        console.log("loop number")
-        await getAppStateFromAPI(carId);
+        console.log("Fetching App State for carId:", carId);
+        await getAppStateFromAPI(carId); // Use the passed carId
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Add a 1-second delay
     }
 }
 
