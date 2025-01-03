@@ -187,6 +187,9 @@ def get_state(carId, car_positions):
     car = car_positions[carId]
     # get_navigation needs `car` to be a list of tuples, each being x, y coordinates
     car = [(car[0], car[1]), (car[2], car[1]), (car[2], car[3]), (car[0], car[3])]
+    # scale the car coordinates by 2
+    car = [[x * 2 for x in pos] for pos in car]
+    
     directions = get_navigation(car, carId)
     print(directions)
     if len(directions) == 1:
