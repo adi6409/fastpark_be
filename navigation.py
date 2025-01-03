@@ -12,9 +12,9 @@ def get_navigation(car, carId):
         parking_slots = get_parking_slots()
         for parking_slot in parking_slots:
             if parking_slot["assignedTo"] == carId:
-                return get_directions(get_middle_of_bbox(car), get_middle_of_bbox(parking_slot["pos"]))
+                slotId = parking_slot["slotId"]
+                return get_directions(get_middle_of_bbox(car), get_middle_of_bbox(parking_slot["pos"]), slotId)
     return None
-
 
 def is_not_assigned(carId):
     parking_slots = get_parking_slots()
@@ -24,23 +24,26 @@ def is_not_assigned(carId):
     return True
 
 
-def get_directions(middle_pixel_car, parking_slots_pixel):
+def get_directions(middle_pixel_car, parking_slots_pixel, slotId=None):
     x, y = get_distance(middle_pixel_car, parking_slots_pixel)
-    directions = create_dictionary(x, y)
+    directions = create_dictionary(x, y, slotId)
     return directions
 
 
 def update_closest_empty_ps(middle_pixel_car, carId):
     parking_slots = get_parking_slots()
     min_count = find_min_distance_ps(middle_pixel_car, parking_slots)
+    if min_count == -1:
+        raise ValueError("No empty parking slot found.")
     status = parking_slots[min_count]
     status["isNavigatedTo"] = True
     status["assignedTo"] = carId
     update_parking_slot(min_count, status)
     return get_middle_of_bbox(parking_slots[min_count]["pos"])
 
+
 def get_middle_of_bbox(ls):
-    return [(ls[0][0] + ls[1][0]) // 2, (ls[0][1] + ls[2][1]) // 2]
+    return [(ls[0][0] + ls[2][0]) // 2, (ls[0][1] + ls[2][1]) // 2]
 
 
 def find_min_distance_ps(middle_pixel_car, parking_slots):
@@ -52,8 +55,6 @@ def find_min_distance_ps(middle_pixel_car, parking_slots):
             if distance < min_distance:
                 min_distance = distance
                 min_count = count
-    if min_count == -1:
-        raise ValueError("No empty parking slot found.")
     return min_count
 
 
@@ -76,17 +77,12 @@ def get_distance(car, parking_slot):
     return x, y
 
 
-def create_dictionary(x, y):
-    d1 = {
-        "direction": "forward",
-        "distance": y
-    }
-    direction = "right" if x < 0 else "left"
-    d2 = {
-        "direction": direction,
-        "distance": abs(x)
-    }
-    if y < 20:
-        return [d2]
-    else:
-        return [d1, d2]
+
+def create_dictionary(x, y, slotId):
+    directions = []
+    if y > 20:
+        directions.append({"direction": "forward", "distance": abs(y), "slotId": slotId})
+    if x != 0:
+        direction = "right" if x > 0 else "left"
+        directions.append({"direction": direction, "distance": abs(x), "slotId": slotId})
+    return directions
