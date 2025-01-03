@@ -5,6 +5,7 @@ import threading
 from queue import Queue
 from parking_slots import get_parking_slots
 from navigation import get_navigation
+from parking_slots import update_parking_slot
 
 
 def warp_parking_lot(image):
@@ -135,10 +136,14 @@ def process_stream(car_positions):
                 for slot in scaled_parking_slots:
                     if cv2.pointPolygonTest(np.array(slot["pos"], np.int32), (middle_x, middle_y), False) >= 0:
                         car_on_parking_slot = True
+                        real_slot = parking_slots[scaled_parking_slots.index(slot)]
+                        real_slot["isTaken"] = True
+                        real_slot["assignedTo"] = car_name
+                        update_parking_slot(scaled_parking_slots.index(slot), real_slot)
                         break
                 if car_on_parking_slot:
                     cv2.rectangle(output_frame, (x1, y1), (x2, y2), (0, 0, 255), 2)
-                    # Check if the car is set to true in the 
+
                 else:
                     cv2.rectangle(output_frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
