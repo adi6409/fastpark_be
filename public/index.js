@@ -41,7 +41,7 @@ async function getAppStateFromAPI(carId) {
             else if(appState['state'] == 'finished'){
                 console.log('finished')
                 updateDirection('finished');
-                updateDistance("");
+                updateDistance(`Slot ${appState['data']['slotId']} is on your ${appState['data']['direction']}`);
                 return 'finished';
             }
             console.log('App State:', appState);

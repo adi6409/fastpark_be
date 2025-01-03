@@ -193,7 +193,13 @@ def get_state(carId, car_positions):
     directions = get_navigation(car, carId)
     print(directions)
     if len(directions) == 1:
-        return {"state": "finished"}
+        return {
+            "state": "finished",
+            "data": {
+                "slotId": directions[0].get("slotId"),
+                "direction": directions[0].get("direction")
+            }
+        }
     else:
         direction = directions[0].get("direction")
         return {
