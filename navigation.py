@@ -83,7 +83,7 @@ def get_distance(car, parking_slot):
 
 def create_dictionary(x, y, slotId):
     directions = []
-    if y > 70:
+    if y > 100:
         directions.append({"direction": "forward", "distance": abs(y), "slotId": slotId})
     if x != 0:
         direction = "right" if x < 0 else "left"
